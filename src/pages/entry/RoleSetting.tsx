@@ -8,6 +8,7 @@ const AcademyCodeModal: React.FC<{ isOpen: boolean; onClose: () => void; onRegis
   onRegisterNew,
 }) => {
   const [academyCode, setAcademyCode] = useState("");
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -69,11 +70,17 @@ const AcademyCodeModal: React.FC<{ isOpen: boolean; onClose: () => void; onRegis
           marginTop: 20,
         }}
         onClick={() => {
-          if (academyCode.trim()) {
-            console.log("입력된 학원 코드:", academyCode);
-            onClose();
-          } else {
+          if (!academyCode.trim()) {
             alert("학원 코드를 입력해주세요.");
+            return;
+          }
+
+          if (academyCode === "12345") {
+            console.log("입력된 학원 코드 : ", academyCode);
+            onClose();
+            navigate("/academy-info");
+          } else {
+            alert("잘못된 코드입니다. 다시 입력해주세요")
           }
         }}
       >
