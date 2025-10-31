@@ -1,15 +1,115 @@
+// src/pages/entry/RoleSetting.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const AcademyCodeModal: React.FC<{ isOpen: boolean; onClose: () => void; onRegisterNew: () => void }> = ({
+  isOpen,
+  onClose,
+  onRegisterNew,
+}) => {
+  const [academyCode, setAcademyCode] = useState("");
+  const navigate = useNavigate();
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        background: "#fff",
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+        boxShadow: "0 -2px 10px rgba(0,0,0,0.1)",
+        padding: "24px 20px",
+        zIndex: 1000,
+      }}
+    >
+      <h3 style={{ fontSize: 18, fontWeight: 600, textAlign: "center" }}>
+        이미 학원 등록이 되어있나요?
+      </h3>
+      <input
+        type="text"
+        placeholder="학원 등록 코드 입력"
+        value={academyCode}
+        onChange={(e) => setAcademyCode(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginTop: 16,
+          borderRadius: 8,
+          border: "1px solid #D9D9D9",
+          fontSize: 14,
+        }}
+      />
+      <button
+        style={{
+          marginTop: 12,
+          background: "none",
+          border: "none",
+          color: "#007AFF",
+          cursor: "pointer",
+          fontWeight: 500,
+        }}
+        onClick={onRegisterNew}
+      >
+        아니오, 새롭게 등록할게요
+      </button>
+      <button
+        style={{
+          width: "100%",
+          height: 48,
+          background: "#007AFF",
+          color: "#fff",
+          border: "none",
+          borderRadius: 8,
+          fontWeight: 600,
+          cursor: "pointer",
+          marginTop: 20,
+        }}
+        onClick={() => {
+          if (!academyCode.trim()) {
+            alert("학원 코드를 입력해주세요.");
+            return;
+          }
+
+          if (academyCode === "12345") {
+            console.log("입력된 학원 코드 : ", academyCode);
+            onClose();
+            navigate("/academy-info");
+          } else {
+            alert("잘못된 코드입니다. 다시 입력해주세요")
+          }
+        }}
+      >
+        완료
+      </button>
+    </div>
+  );
+};
 
 const RoleSettingPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<"teacher" | "parent" | null>(null);
   const [hovered, setHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNext = () => {
     if (selectedRole) {
-      navigate("/home");
+      setIsModalOpen(true); // "다음" 버튼 클릭 시 모달 열기
     }
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    navigate("/home"); // 모달 닫힐 때 홈으로 이동
+  };
+
+  const handleRegisterNew = () => {
+    setIsModalOpen(false);
+    navigate("/register-academy"); // 새 학원 등록 페이지로 이동
   };
 
   return (
@@ -82,7 +182,7 @@ const RoleSettingPage: React.FC = () => {
             justifyContent: "center",
             gap: 16,
             width: "100%",
-            padding: "0 24px", 
+            padding: "0 24px",
             boxSizing: "border-box",
           }}
         >
@@ -203,6 +303,12 @@ const RoleSettingPage: React.FC = () => {
             다음
           </button>
         </div>
+
+        <AcademyCodeModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onRegisterNew={handleRegisterNew}
+        />
       </div>
     </div>
   );
