@@ -1,10 +1,20 @@
 // src/pages/teacher/TeacherInfo.tsx
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoChevronBack } from "react-icons/io5"; // ← 아이콘 (npm install react-icons 필요)
+import { IoChevronBack } from "react-icons/io5";
 
 const TeacherInfo: React.FC = () => {
   const navigate = useNavigate();
+
+  const [name, setName] = useState("abc");
+  const [subject, setSubject] = useState("수학");
+
+  const handleStart = () => {
+    localStorage.setItem("teacherName", name);
+    localStorage.setItem("teacherSubject", subject);
+
+    navigate("/student-list");
+  };
 
   return (
     <div
@@ -32,7 +42,7 @@ const TeacherInfo: React.FC = () => {
       >
         {/* 뒤로가기 버튼 */}
         <button
-          onClick={() => navigate(-1)} // 이전 페이지로 이동
+          onClick={() => navigate(-1)}
           style={{
             position: "absolute",
             top: 24,
@@ -52,7 +62,7 @@ const TeacherInfo: React.FC = () => {
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center", // 세로 중앙 정렬
+            justifyContent: "center",
             alignItems: "center",
             textAlign: "left",
             padding: "0 24px",
@@ -107,6 +117,8 @@ const TeacherInfo: React.FC = () => {
               </label>
               <input
                 type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="강사명을 입력해 주세요"
                 style={{
                   height: 52,
@@ -133,6 +145,8 @@ const TeacherInfo: React.FC = () => {
               </label>
               <input
                 type="text"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
                 placeholder="과목명을 입력해 주세요"
                 style={{
                   height: 52,
@@ -157,7 +171,7 @@ const TeacherInfo: React.FC = () => {
           }}
         >
           <button
-            onClick={() => navigate("/home")} // 시작하기 → 홈 이동
+            onClick={handleStart}
             style={{
               width: "100%",
               height: 52,
