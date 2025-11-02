@@ -3,12 +3,22 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBack, IoCopyOutline } from "react-icons/io5";
 
+interface Student {
+  name: string;
+  code: string;
+  birth: string;
+  grade: string;
+  momPhone: string;
+  dadPhone: string;
+  note: string;
+}
+
 const StudentInfo: React.FC = () => {
   const { studentId } = useParams<{ studentId: string }>();
   const navigate = useNavigate();
 
-  // 더미 데이터
-  const studentData = {
+  // 더미 데이터 (타입 명시)
+  const studentData: Record<string, Student> = {
     "1": { name: "김민준", code: "201452", birth: "2008.12.12", grade: "중등 1학년 수학 I반, 중등 1학년 영어 S반", momPhone: "010-1234-5678", dadPhone: "010-1234-5678", note: "" },
     "2": { name: "이서연", code: "201453", birth: "2008.11.05", grade: "중등 1학년 수학 I반", momPhone: "010-9876-5432", dadPhone: "010-9876-5432", note: "집중력 우수" },
     "3": { name: "박지호", code: "201454", birth: "2008.10.20", grade: "중등 1학년 수학 I반, 과학 A반", momPhone: "010-5555-6666", dadPhone: "010-5555-6666", note: "" },
@@ -17,9 +27,18 @@ const StudentInfo: React.FC = () => {
     "6": { name: "한승민", code: "201457", birth: "2008.07.30", grade: "중등 1학년 수학 I반", momPhone: "010-9999-0000", dadPhone: "010-9999-0000", note: "" },
   };
 
-  const data = studentData[studentId ?? ""] ?? {
-    name: "알 수 없음", code: "000000", birth: "0000.00.00", grade: "정보 없음", momPhone: "000-0000-0000", dadPhone: "000-0000-0000", note: ""
-  };
+  // 안전한 데이터 추출
+  const data: Student = studentId && studentData[studentId]
+    ? studentData[studentId]
+    : {
+        name: "알 수 없음",
+        code: "000000",
+        birth: "0000.00.00",
+        grade: "정보 없음",
+        momPhone: "000-0000-0000",
+        dadPhone: "000-0000-0000",
+        note: "",
+      };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -50,28 +69,33 @@ const StudentInfo: React.FC = () => {
       >
         {/* ===== 헤더 ===== */}
         <div
-          style={{
-            position: "sticky",
-            top: 0,
-            backgroundColor: "white",
-            zIndex: 10,
-            padding: "12px 20px",
-            borderBottom: "1px solid #F0F0F0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+            style={{
+                position: "sticky",
+                top: 0,
+                backgroundColor: "white",
+                zIndex: 10,
+                padding: "12px 20px",
+                borderBottom: "1px solid #F0F0F0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+            }}
         >
-          <IoArrowBack
-            size={24}
-            color="#333"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate(-1)}
-          />
-          <div style={{ fontSize: 16, fontWeight: 600, color: "#333" }}>
-            학생 정보
-          </div>
-          <div style={{ fontSize: 14, color: "#0088FF", cursor: "pointer" }}>수정</div>
+            <IoArrowBack
+                size={24}
+                color="#333"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(-1)}
+            />
+            <div style={{ fontSize: 16, fontWeight: 600, color: "#333" }}>
+                학생 정보
+            </div>
+            <div
+                style={{ fontSize: 14, color: "#0088FF", cursor: "pointer" }}
+                onClick={() => navigate(`/student-edit/${studentId}`)}
+            >
+                수정
+            </div>
         </div>
 
         {/* ===== 학생 코드 ===== */}
@@ -115,7 +139,7 @@ const StudentInfo: React.FC = () => {
   );
 };
 
-// 재사용 가능한 컴포넌트
+// 재사용 가능한 컴포넌트 (타입 명시)
 const InfoItem: React.FC<{ label: string; value: string; copy?: boolean }> = ({ label, value, copy }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(value);

@@ -10,6 +10,7 @@ import RegisterStudentPage from "./pages/student/RegisterStudent";
 import StudentList from "./pages/student/StudentList";
 import StudentDiary from "./pages/student/StudentDiary";
 import StudentInfo from "./pages/student/StudentInfo";
+import StudentEdit from "./pages/student/StudentEdit";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/student-list" element={<StudentList />} />
         <Route path="/student-diary/:studentId" element={<StudentDiary />} />
         <Route path="/student-info/:studentId" element={<StudentInfo />} />
+        <Route path="/student-edit/:studentId" element={<StudentEdit />} />
       </Routes>
     </BrowserRouter>
   );
