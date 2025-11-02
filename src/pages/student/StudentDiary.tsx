@@ -134,7 +134,7 @@ const StudentDiary: React.FC = () => {
             당일 기록
           </button>
           <button
-            onClick={() => setActiveTab("stats")}
+            onClick={() => navigate(`/student-stats/${studentId}`)}  // 이동!
             style={{
               flex: 1,
               padding: "12px 0",

@@ -11,6 +11,7 @@ import StudentList from "./pages/student/StudentList";
 import StudentDiary from "./pages/student/StudentDiary";
 import StudentInfo from "./pages/student/StudentInfo";
 import StudentEdit from "./pages/student/StudentEdit";
+import StudentStats from "./pages/student/StudentStats";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/student-diary/:studentId" element={<StudentDiary />} />
         <Route path="/student-info/:studentId" element={<StudentInfo />} />
         <Route path="/student-edit/:studentId" element={<StudentEdit />} />
+        <Route path="/student-stats/:studentId" element={<StudentStats />} />
       </Routes>
     </BrowserRouter>
   );
