@@ -1,10 +1,10 @@
 // src/pages/student/StudentDiary.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   IoArrowBack,
-  IoChevronBack,        // ← IoChevronLeft 대체
-  IoChevronForward,     // ← IoChevronRight 대체
+  IoChevronBack,
+  IoChevronForward,
   IoPencil,
   IoCopyOutline,
 } from "react-icons/io5";
@@ -33,7 +33,18 @@ const StudentDiary: React.FC = () => {
     "6": "한승민",
   }[studentId ?? ""] ?? "알 수 없음";
 
+  // 탭 상태
   const [activeTab, setActiveTab] = useState<"daily" | "stats">("daily");
+
+  // URL 기반 탭 초기화
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.includes("/student-diary/")) {
+      setActiveTab("daily");
+    } else if (path.includes("/student-stats/")) {
+      setActiveTab("stats");
+    }
+  }, [studentId]);
 
   const [diary] = useState<DiaryEntry>({
     date: "2025년 09월 25일(수)",
@@ -100,7 +111,6 @@ const StudentDiary: React.FC = () => {
           <div style={{ fontSize: 16, fontWeight: 600, color: "#333" }}>
             {studentName} 학생
           </div>
-  
           <div
             style={{ fontSize: 14, color: "#0088FF", cursor: "pointer" }}
             onClick={() => navigate(`/student-info/${studentId}`)}
@@ -118,7 +128,10 @@ const StudentDiary: React.FC = () => {
           }}
         >
           <button
-            onClick={() => setActiveTab("daily")}
+            onClick={() => {
+              setActiveTab("daily");
+              navigate(`/student-diary/${studentId}`, { replace: true });
+            }}
             style={{
               flex: 1,
               padding: "12px 0",
@@ -134,7 +147,10 @@ const StudentDiary: React.FC = () => {
             당일 기록
           </button>
           <button
-            onClick={() => navigate(`/student-stats/${studentId}`)}  // 이동!
+            onClick={() => {
+              setActiveTab("stats");
+              navigate(`/student-stats/${studentId}`, { replace: true });
+            }}
             style={{
               flex: 1,
               padding: "12px 0",
@@ -209,17 +225,17 @@ const StudentDiary: React.FC = () => {
                 {diary.content}
               </div>
             </div>
-
           </div>
         )}
 
-        {/* ===== 누적 통계 탭 (임시) ===== */}
+        {/* ===== 누적 통계 탭 내용 ===== */}
         {activeTab === "stats" && (
           <div style={{ padding: "20px", textAlign: "center", color: "#868686" }}>
-            누적 통계는 준비 중입니다.
+            누적 통계는 <strong>/student-stats/{studentId}</strong>에서 확인 가능합니다.
           </div>
         )}
 
+        {/* ===== 하단 액션 바 ===== */}
         <div
           style={{
             position: "fixed",
