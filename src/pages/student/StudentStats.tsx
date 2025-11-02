@@ -62,40 +62,42 @@ const StudentStats: React.FC = () => {
 
         {/* ===== 탭 ===== */}
         <div
-          style={{
-            display: "flex",
-            backgroundColor: "#F5F5F5",
-            margin: "0 20px",
-            borderRadius: 8,
-            overflow: "hidden",
-          }}
-        >
-          <button
             style={{
-              flex: 1,
-              padding: "10px 0",
-              backgroundColor: "#E0E0E0",
-              color: "#868686",
-              fontSize: 14,
-              border: "none",
+                display: "flex",
+                backgroundColor: "#F5F5F5",
+                margin: "0 20px",
+                borderRadius: 8,
+                overflow: "hidden",
             }}
-          >
-            당일 기록
-          </button>
-          <button
-            style={{
-              flex: 1,
-              padding: "10px 0",
-              backgroundColor: "white",
-              color: "#0088FF",
-              fontSize: 14,
-              fontWeight: 600,
-              border: "none",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            누적 통계
-          </button>
+            >
+            <button
+                onClick={() => navigate(`/student-diary/${studentId}`)}  // 이동 추가!
+                style={{
+                flex: 1,
+                padding: "10px 0",
+                backgroundColor: "#E0E0E0",
+                color: "#868686",
+                fontSize: 14,
+                border: "none",
+                cursor: "pointer",
+                }}
+            >
+                당일 기록
+            </button>
+            <button
+                style={{
+                flex: 1,
+                padding: "10px 0",
+                backgroundColor: "white",
+                color: "#0088FF",
+                fontSize: 14,
+                fontWeight: 600,
+                border: "none",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                }}
+            >
+                누적 통계
+            </button>
         </div>
 
         <div style={{ padding: "20px" }}>
