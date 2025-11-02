@@ -8,6 +8,8 @@ import TeacherInfo from "./pages/teacher/TeacherInfo";
 import RegisterAcademyPage from "./pages/teacher/RegisterAcademy";
 import RegisterStudentPage from "./pages/student/RegisterStudent";
 import StudentList from "./pages/student/StudentList";
+import StudentDiary from "./pages/student/StudentDiary";
+import StudentInfo from "./pages/student/StudentInfo";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/register-academy" element={<RegisterAcademyPage />} />
         <Route path="/register-student" element={<RegisterStudentPage />} />
         <Route path="/student-list" element={<StudentList />} />
+        <Route path="/student-diary/:studentId" element={<StudentDiary />} />
+        <Route path="/student-info/:studentId" element={<StudentInfo />} />
       </Routes>
     </BrowserRouter>
   );

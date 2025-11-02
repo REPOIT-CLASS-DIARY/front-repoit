@@ -45,6 +45,11 @@ const StudentList: React.FC = () => {
     navigate("/register-student");
   };
 
+  // 학생 클릭 → 일지 작성 페이지로 이동
+  const handleStudentClick = (studentId: number) => {
+    navigate(`/student-diary/${studentId}`);
+  };
+
   return (
     <div
       style={{
@@ -161,7 +166,9 @@ const StudentList: React.FC = () => {
                       alignItems: "center",
                       padding: "12px 0",
                       borderBottom: "1px solid #F0F0F0",
+                      cursor: "pointer", // 클릭 가능함을 시각적으로 표시
                     }}
+                    onClick={() => handleStudentClick(student.id)} // 클릭 이벤트 추가
                   >
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 500, color: "#333" }}>
@@ -221,7 +228,9 @@ const StudentList: React.FC = () => {
                       alignItems: "center",
                       padding: "12px 0",
                       borderBottom: "1px solid #F0F0F0",
+                      cursor: "pointer", // 클릭 가능함을 시각적으로 표시
                     }}
+                    onClick={() => handleStudentClick(student.id)} // 클릭 이벤트 추가
                   >
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 500, color: "#333" }}>

@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
@@ -10,4 +10,9 @@ export default defineConfig({
       },
     }),
   ],
-})
+  server: {
+    host: true,        // 0.0.0.0 + localhost 모두 허용
+    port: 5174,        // 5173 → 5174로 변경 (충돌 회피)
+    strictPort: true,
+  },
+});
