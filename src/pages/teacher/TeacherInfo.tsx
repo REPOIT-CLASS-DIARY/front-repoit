@@ -5,6 +5,7 @@ import { IoChevronBack } from "react-icons/io5"; // ← 아이콘 (npm install r
 
 const TeacherInfo: React.FC = () => {
   const navigate = useNavigate();
+  const academyName = "ABC학원";
 
   return (
     <div
@@ -157,7 +158,10 @@ const TeacherInfo: React.FC = () => {
           }}
         >
           <button
-            onClick={() => navigate("/home")} // 시작하기 → 홈 이동
+            onClick={() => navigate("/lesson-list-start", {
+              state: {academyName},
+            })
+            } // 시작하기 → 홈 이동
             style={{
               width: "100%",
               height: 52,
